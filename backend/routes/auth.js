@@ -6,101 +6,15 @@ const {
   forgotPassword,
   resetPassword,
   logout,
-  validateToken,
-  socialAuthCallback
+  validateToken
 } = require("../controllers/authController");
 const middlewares = require("../middleware/authMiddleware");
 const router = express.Router();
 
-/**
- * @swagger
- * /api/auth/signup:
- *   post:
- *     summary: Register a new user
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *               - password
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *               password:
- *                 type: string
- *                 minLength: 6
- *     responses:
- *       200:
- *         description: User registered successfully
- *       409:
- *         description: User already exists
- *       500:
- *         description: Server error
- */
 router.post("/signup", signup);
 
-/**
- * @swagger
- * /api/auth/login:
- *   post:
- *     summary: Login user
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *               - password
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: Login successful
- *       400:
- *         description: Invalid credentials
- *       500:
- *         description: Server error
- */
 router.post("/login", login);
 
-/**
- * @swagger
- * /api/auth/forgot-password:
- *   post:
- *     summary: Send password reset email
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *     responses:
- *       200:
- *         description: Reset email sent successfully
- *       400:
- *         description: User not found
- *       500:
- *         description: Server error
- */
 router.post("/forgot-password", forgotPassword);
 
 /**
@@ -174,60 +88,6 @@ router.post("/logout", middlewares.optionalAuthMiddleware, logout);
  */
 router.get("/validate-token", middlewares.authMiddleware, validateToken);
 
-// Google OAuth Routes
-/**
- * @swagger
- * /api/auth/google:
- *   get:
- *     summary: Authenticate with Google
- *     tags: [Auth]
- *     responses:
- *       302:
- *         description: Redirects to Google OAuth
- */
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-/**
- * @swagger
- * /api/auth/google/callback:
- *   get:
- *     summary: Google OAuth callback
- *     tags: [Auth]
- *     responses:
- *       302:
- *         description: Redirects to frontend with token
- */
-router.get('/google/callback', 
-  passport.authenticate('google', { session: false, failureRedirect: '/login' }),
-  socialAuthCallback
-);
-
-// GitHub OAuth Routes
-/**
- * @swagger
- * /api/auth/github:
- *   get:
- *     summary: Authenticate with GitHub
- *     tags: [Auth]
- *     responses:
- *       302:
- *         description: Redirects to GitHub OAuth
- */
-router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
-
-/**
- * @swagger
- * /api/auth/github/callback:
- *   get:
- *     summary: GitHub OAuth callback
- *     tags: [Auth]
- *     responses:
- *       302:
- *         description: Redirects to frontend with token
- */
-router.get('/github/callback',
-  passport.authenticate('github', { session: false, failureRedirect: '/login' }),
-  socialAuthCallback
-);
 
 module.exports = router;
