@@ -34,7 +34,6 @@ This is a full-stack expense tracker application built with Node.js for the back
 
 - Node.js & Express.js
 - MongoDB & Mongoose
-- JWT for authentication
 - Nodemailer for email functionality
 - Google Generative AI (Gemini) for financial insights
 - Swagger for API documentation
