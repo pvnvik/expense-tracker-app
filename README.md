@@ -160,9 +160,3 @@ The application is deployed on Vercel at: [https://expense-tracker-app-manthanan
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Contact
-
-For questions or feedback, please contact:
-
-- Email: [manthan.ank@gmail.com](mailto:manthan.ank@gmail.com)
-- GitHub: [manthanank](https://github.com/manthanank)
